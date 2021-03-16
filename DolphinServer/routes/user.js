@@ -94,7 +94,7 @@ module.exports=[
 					}, 
 					'secret', 
 					{ expiresIn: 86400 });
-				return res.status(200).send(token);
+				return res.status(200).json(token);
 			})
 			.catch(err => res.status(500).json({error : "Authentification failed"}))
 		}

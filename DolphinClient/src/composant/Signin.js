@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+import {useAuth} from '../auth'
 let Signin = () => {
-    const [user, setUser] = useState(null);
+    const [username, setUser] = useState(null);
     const [password, setPassword] = useState(null);
-    let handleSubmit = () => {
-        console.log(user + " "+password);
+    const {signIn} = useAuth();
+
+    let handleSubmit = (e) => {
+        e.preventDefault();
+        signIn({username,password})
     }
     return <>
         <form onSubmit={handleSubmit}>
-            <input type="text" value={user} onChange={e=> setUser(e.target.value)} required/> <br/>
-            <input type="password" value={password} onChange={e=> setPassword(e.traget.value)} required/><br/>
+            <input type="text" value={username} onChange={e=> setUser(e.target.value)} required/> <br/>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required/><br/>
             <button>Connexion</button>
         </form>
     </>
