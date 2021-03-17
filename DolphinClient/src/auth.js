@@ -22,7 +22,7 @@ export let  AuthProvider = ({children})=> {
         })
         .then(checkStatus)
         .then(res => res.json())
-        .then(data => {localStorage.setItem("token",data); history.push('/home')} )
+        .then(data => {localStorage.setItem("token",data); history.push('/')} )
         .then(whoami)
         .catch(err=> console.log(err))
     }
@@ -36,13 +36,31 @@ export let  AuthProvider = ({children})=> {
       })
       .then(checkStatus)
       .then(res => res.json())
-      .then(data => {setUser(data.name); setIsAdmin(data.admin)})
+      .then(data => setUser(
+        {name: data.name, isAdmin: data.isAdmin}
+      ))
+      .catch(err => console.log(err))
     }
-    let signUp = () => {}
-    let signOut = () => {}
+
+    let signUp = ({username, password}) => {
+      console.log(username + password)
+      fetch(`${url_prefix}/user/signup`,{
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({username , password})
+      })
+      .then(checkStatus)
+      .then(history.push('/'))
+      .catch(err => console.log(err))
+    }
+
+    let signOut = () => {
+      setUser(null);
+      localStorage.removeItem('token');
+    }
     return checkingUser 
             ? <p>Chargement ...</p>
-            : <AuthContext.Provider value={{user, isAdmin, signIn, signUp, signOut}}>
+            : <AuthContext.Provider value={{user, signIn, signUp, signOut}}>
                 {children}
               </AuthContext.Provider>
 }

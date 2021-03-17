@@ -37,6 +37,12 @@ const sequelize= connec().then((s) => {
         const model = require('./' + filename)(s, Sequelize.DataTypes);
         db[model.name] = model;
     });
+
+    Object.keys(db).forEach((modelName) => {
+        db[modelName].associate(db);
+    });
+    s.sync();
+
     })
     .catch(error=>console.error('Unable to connect to the database:', error))
 });

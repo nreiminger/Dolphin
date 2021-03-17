@@ -9,7 +9,19 @@ module.exports = [
         url : '/captor',
         method : 'get',
         func : [(req, res) => {
-            
+                db.group.findAll({
+                    attributes : ['gro_nom'],
+                    include :  {
+                        model : db.user,
+                        attributes : ['uti_name', 'cap_id_capteur'],
+                        where : {
+                            name :{
+                                [sequelize.Op.ne]:null 
+                            }
+                        }
+                    }
+                })
+            .then(captors => res.json(captors))
         }
     ]
     },

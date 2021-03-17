@@ -1,8 +1,7 @@
 'use strict';
-const jwt = require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('user', {
+  const user = sequelize.define('user', {
     id:{
       autoIncrement : true,
       type : DataTypes.INTEGER,
@@ -20,17 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull : true,
       field : 'uti_password',
     },
-    groupe:{
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      field: "gro_id_groupe",
-      defaultValue: 0
-    },
-    id_capteur:{
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      field: "cap_id_capteur",
-    },
     isAdmin:{
       type:DataTypes.INTEGER,
       allowNull: false,
@@ -41,14 +29,25 @@ module.exports = (sequelize, DataTypes) => {
     schema: 's_capteur',
     tableName: 't_utilisateur_uti',
     timestamps : false,
-});     
+}); 
+
+user.associate = (db) => {
+  user.belongsTo(db.captor, {
+    onDelete : 'cascade',
+    foreignKey: 'gro_id_groupe'
+  }) //cree une clé étrangère pour le capteur 
+
+  user.belongsTo(db.group,{
+    onDelete: 'cascade',
+    foreignKey : 'cap_id_capteur'
+  }) //clé etrangère pour le groupe
+}
   
-User.prototype.toJSON = function () {
+user.prototype.toJSON = function () {
     const data = Object.assign({}, this.get());
     delete data.password;
-    delete data.id_capteur;
     return data;
   };
   
-  return User;
+return user;
 }

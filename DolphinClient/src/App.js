@@ -9,6 +9,9 @@ import {AuthProvider} from './auth';
 import {Home} from './composant/Home'
 const queryClient = new QueryClient()
 
+let Welcome = () => {
+  return <p>Bienvenue</p>
+}
 let Main = () => {
   return <>
     <AuthProvider>
@@ -17,8 +20,9 @@ let Main = () => {
       <hr/>
       <Switch>
         <Route path="/signin"> <Signin/> </Route>
-        <Route path="/signup"> <Signup/> </Route>
-        <Route path='/home'> <Home/> </Route>
+        <Route path="/createAccount"> <Signup/> </Route>
+        <Route path='/home'> <Welcome/></Route>
+        <Route path="/"><Home/></Route>
       </Switch>
     </AuthProvider>
   </>

@@ -30,7 +30,6 @@ module.exports=[
 		url : '/user/signup',
 		method : 'post',
 		func : (req, res) =>{
-			console.log(req.body)
 			const data = {
 				name : req.body.username || '',
 				password : bcrypt.hashSync(req.body.password,10) || ''
@@ -41,12 +40,16 @@ module.exports=[
 		}
 	},
 	{
-		url:'/user/',
+		url:'/user',
 		method: 'get',
 		func: (req,res) =>{
-			console.log("test")
-			return  db.user.findAll()
-			.then(data => res.json(data))
+			console.log(db);
+			return  db.user.findAll({
+				include : {
+					model : db.captor
+				}
+			})
+			.then(data => {console.log(data); res.json(data)})
 			.catch(err => { console.log( err);res.json({error : err})})
 		}
 	},
