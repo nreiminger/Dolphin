@@ -8,6 +8,8 @@ import Signup from './composant/Signup'
 import {AuthProvider} from './auth';
 import {Home} from './composant/Home'
 import Capteur from './composant/Capteur'
+import Groupe from './composant/Groupe'
+
 const queryClient = new QueryClient()
 
 let Welcome = () => {
@@ -22,6 +24,7 @@ let Main = () => {
       <Switch>
         <Route path="/signin"> <Signin/> </Route>
         <Route path="/createAccount"> <Signup/> </Route>
+        <Route path="/createGroupe"><Groupe/></Route>
         <Route path='/home'> <Welcome/></Route>
         <Route path="/capteur"><Capteur/></Route>
         <Route path="/"><Home/></Route>

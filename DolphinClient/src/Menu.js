@@ -14,7 +14,7 @@ export default () => {
                 :
                 <Nav>
                     <Nav.Item><Nav.Link href="/#/">Home</Nav.Link></Nav.Item>
-                    <Nav.Item><Nav.Link href="/#/createAccount">Créer un groupe</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/#/createGroupe">Créer un groupe</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link href="/#/capteur">Les capteurs</Nav.Link></Nav.Item>
                     <Nav.Item><Nav.Link onClick={signOut}>Deconnexion</Nav.Link></Nav.Item>
                 </Nav>

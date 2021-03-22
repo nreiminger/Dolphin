@@ -51,5 +51,12 @@ module.exports = [
             }
         ]
     },
+    {
+        url :'/captor/:captor_id',
+        method :'delete',
+        func : [
+            capteur_ctrl.delete_by_id
+        ]
+    },
     
 ];

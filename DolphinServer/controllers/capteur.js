@@ -2,6 +2,7 @@
 
 const db = require("../models")
 const sequelize =require("sequelize");
+const capteur = require("../routes/capteur");
 module.exports ={
     get_max_capteur : (req, res, next) =>{
         return db.captor.findOne({
@@ -22,5 +23,17 @@ module.exports ={
             next()})
         .catch(err => console.log(err))
     },
-
+    delete_by_id : (req,res,next) =>{
+        console.log(req.params.captor_id)
+        db.captor.findByPk(req.params.captor_id)
+            .then(captor => {
+                if(!captor){
+                    throw {status: 404, message: 'Requested capteur not found'};
+                }
+                console.log(captor)
+                return captor.destroy();
+            })
+            .then(()=> res.status(200).end())
+            .catch( err => next(err));
+    },
 };
