@@ -15,7 +15,7 @@ module.exports = [
                         model : db.user,
                         attributes : ['uti_name', 'cap_id_capteur'],
                         where : {
-                            name :{
+                            cap_id_capteur :{
                                 [sequelize.Op.ne]:null 
                             }
                         }

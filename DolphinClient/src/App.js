@@ -7,6 +7,7 @@ import Signin from './composant/Signin';
 import Signup from './composant/Signup'
 import {AuthProvider} from './auth';
 import {Home} from './composant/Home'
+import Capteur from './composant/Capteur'
 const queryClient = new QueryClient()
 
 let Welcome = () => {
@@ -22,6 +23,7 @@ let Main = () => {
         <Route path="/signin"> <Signin/> </Route>
         <Route path="/createAccount"> <Signup/> </Route>
         <Route path='/home'> <Welcome/></Route>
+        <Route path="/capteur"><Capteur/></Route>
         <Route path="/"><Home/></Route>
       </Switch>
     </AuthProvider>

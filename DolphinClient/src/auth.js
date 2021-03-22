@@ -57,6 +57,7 @@ export let  AuthProvider = ({children})=> {
     let signOut = () => {
       setUser(null);
       localStorage.removeItem('token');
+      history.push("/home")
     }
     return checkingUser 
             ? <p>Chargement ...</p>

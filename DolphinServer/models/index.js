@@ -41,7 +41,8 @@ const sequelize= connec().then((s) => {
     Object.keys(db).forEach((modelName) => {
         db[modelName].associate(db);
     });
-    s.sync();
+    
+    //s.sync(); //permet de verifier les tables a créer
 
     })
     .catch(error=>console.error('Unable to connect to the database:', error))

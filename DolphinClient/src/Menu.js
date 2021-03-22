@@ -1,22 +1,23 @@
 import React from "react"
 import {Link} from "react-router-dom";
 import {useAuth} from "./auth"
+import {Nav} from "react-bootstrap";
 export default () => {
     const {user, signOut} = useAuth();
-    console.log(user != null)
     return <> 
             {user == null
-                ? <ul>
-                    <li><Link to="/home">Home </Link></li>
-                    <li><Link to="signin">Se connecter</Link></li>
-                </ul>
+                ?
+                <Nav ActiveKey="/#/home"> 
+                    <Nav.Item><Nav.Link href="/#/home">Home </Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/#/signin">Se connecter</Nav.Link></Nav.Item>
+                </Nav>
                 :
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/createAccount">Créer un compte utilisateur</Link></li>
-                    <li><Link to="/capteur">Les capteur</Link></li>
-                    <li><Link onClick={signOut}>Deconnexion</Link></li>
-                </ul>
+                <Nav>
+                    <Nav.Item><Nav.Link href="/#/">Home</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/#/createAccount">Créer un groupe</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link href="/#/capteur">Les capteurs</Nav.Link></Nav.Item>
+                    <Nav.Item><Nav.Link onClick={signOut}>Deconnexion</Nav.Link></Nav.Item>
+                </Nav>
                 }
         </>
 }
