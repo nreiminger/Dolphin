@@ -14,12 +14,13 @@ module.exports = [
                     include :  {
                         model : db.user,
                         attributes : ['uti_name', 'cap_id_capteur'],
-                        where : {
-                            cap_id_capteur :{
-                                [sequelize.Op.ne]:null 
-                            }
-                        }
-                    }
+                        where : { 
+                            cap_id_capteur : {[sequelize.Op.ne]:null }                         
+                        },
+                    }, 
+                    order :[
+                        [db.user,'cap_id_capteur'],
+                    ]
                 })
             .then(captors => res.json(captors))
         }
