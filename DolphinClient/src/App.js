@@ -9,7 +9,8 @@ import {AuthProvider} from './auth';
 import {Home} from './composant/Home'
 import Capteur from './composant/Capteur'
 import Groupe from './composant/Groupe'
-
+import ChangePassword from './composant/ChangePassword'
+import {Navbar} from "react-bootstrap";
 const queryClient = new QueryClient()
 
 let Welcome = () => {
@@ -18,7 +19,20 @@ let Welcome = () => {
 let Main = () => {
   return <>
     <AuthProvider>
-      <h1>Dolphin captor</h1>
+    
+    <Navbar bg="dark" variant="dark">
+    <Navbar.Brand href="#home" className="text-center">
+      <img
+        alt=""
+        src="/logo.svg"
+        width="30"
+        height="30"
+        className="d-inline-block align-top"
+      />{' '}
+      Capteur Dolphin
+    </Navbar.Brand>
+  </Navbar>
+      
       <Menu/>
       <hr/>
       <Switch>
@@ -27,6 +41,7 @@ let Main = () => {
         <Route path="/createGroupe"><Groupe/></Route>
         <Route path='/home'> <Welcome/></Route>
         <Route path="/capteur"><Capteur/></Route>
+        <Route path="/changePassword"><ChangePassword/></Route>
         <Route path="/"><Home/></Route>
       </Switch>
     </AuthProvider>

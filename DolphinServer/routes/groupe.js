@@ -10,9 +10,7 @@ module.exports = [
         func : [
             //authVerify,
             (req,res) => { 
-                db.group.findAll({
-                    include : db.user
-                })
+                db.group.findAll()
                 .then(groups => res.status(200).json(groups)) }
         ]
     },
@@ -23,5 +21,6 @@ module.exports = [
             capteur_ctrl.get_max_capteur,
             group_ctrl.create 
         ]
-    }
+    },
+    
 ]

@@ -3,7 +3,7 @@
 const db = require("../models");
 const sequelize = require("sequelize");
 const capteur_ctrl = require('../controllers/capteur')
-const authVerify = require('../middleware/authVerify')
+const authVerify = require('../middleware/authVerify');
 module.exports = [
     {
         url : '/captor',
@@ -56,7 +56,30 @@ module.exports = [
         url :'/captor/:captor_id',
         method :'delete',
         func : [
+            //authVerify,
             capteur_ctrl.delete_by_id
+        ]
+    },
+    {
+        url:'/captor/:captor_id',
+        method:'put',
+        func : [
+            //authVerify,
+            (req, res) => {
+                db.user.update(
+                    {gro_id_groupe : parseInt(req.body.group_id)} ,
+                    {
+                        where :{
+                            cap_id_capteur : req.params.captor_id
+                        }
+                    }
+                )
+                .then(data => {
+                    if(data)
+                    return res.status(201).send("Modifié")}
+                )
+                .catch(err => console.log(err))
+        }
         ]
     },
     

@@ -12,6 +12,18 @@ const capteurApi = {
         })
         .then(checkStatus)
     },
+    updateCapteur : ({currentCapteur,group_id})=>{
+        console.log(currentCapteur + " "+ group_id)
+        return fetch(`${url_prefix}/captor/${currentCapteur}`,{
+            method : 'put',
+            headers : new Headers({
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }),
+            body : JSON.stringify({group_id})
+        })
+    },
     createGroupe : ({name,nbCapteur})=>{
         console.log(JSON.stringify({name,nbCapteur}))
         return fetch(`${url_prefix}/group`,{
@@ -25,5 +37,11 @@ const capteurApi = {
         })
         .then(checkStatus)
     },
+    getGroup : () => {
+        return fetch(`${url_prefix}/group`)
+        .then(checkStatus)
+        .then(data => data.json())
+    },
+
 }
 export default capteurApi;

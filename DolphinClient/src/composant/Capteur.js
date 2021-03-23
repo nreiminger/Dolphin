@@ -3,24 +3,51 @@ import { QueryClient, QueryClientProvider, useMutation, useQuery, useQueryClient
 import api from '../apiCapteur';
 import {Table , Button, Modal} from "react-bootstrap";
 let Capteur = () => {
-    const{isLoading, data: capteurs} = useQuery('capteur', () => api.getCapteurs() );
+
     const queryCache = useQueryClient();
-    const [show, setShow] = useState(false);
+    
+    const{data: capteurs} = useQuery('capteur',  () => api.getCapteurs() );
+    const{data : groups} = useQuery('group', () => api.getGroup() )
+    
+    console.log(groups);
+    const [showSuppr, setShowSuppr] = useState(false);
+    const [showModif, setShowModif] = useState(false);
+    const [group_id , setGr ] = useState(1);
+
     const [currentCapteur, setCurrentCapteur] = useState(-1);
-    const mutatationDelete = useMutation(api.deleteCapteur, {
+    const mutationDelete = useMutation(api.deleteCapteur, {
         onSuccess : () => {
             queryCache.invalidateQueries("capteur");
         }
     })
-    const handleClose = (success) => {
-            setShow(false)
+    
+    const mutationModif = useMutation(api.updateCapteur,{
+        onSuccess : () => {
+            queryCache.invalidateQueries("capteur");
+        }
+    })
+
+    const handleCloseSuppr = (success) => {
+            setShowSuppr(false)
             if(success){
-                mutatationDelete.mutate(currentCapteur);
+                mutationDelete.mutate(currentCapteur);
             }
         };
-    const handleShow = (capteur_id) => {
-        setShow(true)
+    const handleShowSuppr = (capteur_id) => {
+        setShowSuppr(true)
         setCurrentCapteur(capteur_id)
+    };
+
+    const handleShowModif = (capteur_id) =>{
+        setShowModif(true)
+        setCurrentCapteur(capteur_id);
+    }
+
+    const handleCloseModif = (success) => {
+        setShowModif(false)
+        if(success){
+            mutationModif.mutate({currentCapteur,group_id})
+        }
     };
     console.log(capteurs)
     return <>
@@ -38,22 +65,44 @@ let Capteur = () => {
                 capteurs?.map(capteur => <tr>
                     <td>{capteur.gro_nom}</td>
                     <td>{capteur.user.uti_name}</td>
-                    <td>  <Button variant="danger" onClick={() => handleShow(capteur.user.cap_id_capteur)} >Supprimer</Button>{' '}</td>
+                    <td>  
+                        <Button variant="danger" onClick={() => handleShowSuppr(capteur.user.cap_id_capteur)}>Supprimer</Button>{' '}
+                        <Button variant="warning" onClick={() => handleShowModif(capteur.user.cap_id_capteur)}>Modifier</Button>
+                    </td>
                 </tr>)
             }
         </tbody>
         </Table>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={showSuppr} onHide={handleCloseSuppr}>
         <Modal.Header closeButton>
           <Modal.Title>Suppression du capteur numéro {currentCapteur}</Modal.Title>
         </Modal.Header>
         <Modal.Body>Etes-vous sûr de bien vouloir supprimer le capteur ?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose(false)}>
+          <Button variant="secondary" onClick={() => handleCloseSuppr(false)}>
             Annuler
           </Button>
-          <Button variant="primary" onClick={() => handleClose(true)}>
+          <Button variant="primary" onClick={() => handleCloseSuppr(true)}>
             Supprimer
+          </Button>
+        </Modal.Footer>
+        </Modal>
+
+        <Modal show={showModif} onHide={handleShowModif}>
+        <Modal.Header closeButton>
+          <Modal.Title>Affectation du capteur numéro {currentCapteur}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body> <label>Affecter au groupe </label> 
+                    <select>
+                        {groups?.map(group => <option onClick={ () => setGr(group.id) }>{group.nom}</option>)}
+                    </select>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => handleCloseModif(false)}>
+            Annuler
+          </Button>
+          <Button variant="primary" onClick={() => handleCloseModif(true)}>
+            Affecter
           </Button>
         </Modal.Footer>
         </Modal>
