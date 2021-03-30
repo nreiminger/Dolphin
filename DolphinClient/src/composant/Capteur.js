@@ -52,7 +52,7 @@ let Capteur = () => {
     console.log(capteurs)
     return <>
         <h2>Les capteurs</h2>
-        <Table striped bordered hover variant="dark">
+        <Table striped bordered hover variant="dark" className="justify-content-md-center">
             <thead>
                 <tr>
                     <th>Groupe</th>
@@ -66,8 +66,8 @@ let Capteur = () => {
                     <td>{capteur.gro_nom}</td>
                     <td>{capteur.user.uti_name}</td>
                     <td>  
+                        <Button variant="warning" className="mr-3 pr-3" onClick={() => handleShowModif(capteur.user.cap_id_capteur)}>Modifier</Button>
                         <Button variant="danger" onClick={() => handleShowSuppr(capteur.user.cap_id_capteur)}>Supprimer</Button>{' '}
-                        <Button variant="warning" onClick={() => handleShowModif(capteur.user.cap_id_capteur)}>Modifier</Button>
                     </td>
                 </tr>)
             }

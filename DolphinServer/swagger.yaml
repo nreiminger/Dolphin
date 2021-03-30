@@ -1,0 +1,100 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Swagger JWT Example
+host: localhost:4100
+basePath: /
+schemes:
+  - http
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+tags:
+- name: "user"
+  description: "authentification routes"
+- name: "store"
+  description: "Access to Petstore orders"
+- name: "user"
+  description: "Operations about user"
+  externalDocs:
+    description: "Find out more about our store"
+    url: "http://swagger.io"
+
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /user/signin:
+    post:
+      tags:
+        - "user"
+      description: "login with a username, password"
+      parameters:
+        -  in: body
+           name: user
+           description: User to connecetd
+           schema: 
+            type: object
+            required:
+              - username
+              - password
+            properties:
+              username: 
+                type: string
+                example: admin
+              password:
+                type: string
+                example: admin
+      responses:
+        "200":
+          description: "Success"
+        "403":
+          description: "Access Denied"
+
+  /user/whoami:
+    post:
+      tags:
+        - "user"
+      description: "verifiy how is connected"
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: "Success"
+          schema:
+
+  /protected:
+    get:
+      tags:
+        - "test"
+      operationId: protectedGet
+      description: "Protected endpoint, only accessible to 'admins' and 'users'"
+      security:
+        - Bearer: []
+      x-security-scopes:
+        - admin
+        - user
+      responses:
+        "200":
+          description: "Success"
+          schema:
+        "403":
+          description: "Access Denied"
+          schema:
+  /protected2:
+    get:
+      tags:
+        - "test"
+      description: "Protected endpoint, only accessible to 'admins'"
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: "Success"
+          schema:
+        "403":
+          description: "Access Denied"
+          schema:

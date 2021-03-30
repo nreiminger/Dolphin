@@ -11,7 +11,7 @@ require('dotenv').config()
 });*/
 
 let connec = async() =>{  
-    const sshConnection = new SSHConnection({
+    /*const sshConnection = new SSHConnection({
         username: process.env.SSH_USER,
         endHost: process.env.SSH_HOST,
         endPort: process.env.SSH_PORT,
@@ -20,7 +20,7 @@ let connec = async() =>{
         fromPort: 4000,
         toPort: 5432,
         toHost:'localhost'
-    })
+    })*/
     return new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
         host: '127.0.0.1',
         dialect:  'postgres',

@@ -1,39 +1,11 @@
 const express = require("express");
 const body_parser = require("body-parser");
-const path = require("path");
-
+const swaggerUi = require("swagger-ui-express");
+var YAML = require("yamljs");
+const swaggerDocument = YAML.load('./swagger.yaml')
 const app = express();
 
-/*--- documentation --*/
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-
-const swaggerOptions = {
-    swaggerDefinition: {
-      openapi: '3.0.1', // YOU NEED THIS
-      info: {
-        title: 'Dolphin Config Server',
-        version: '1.0.0',
-      },
-      basePath: '/',
-      components: {
-        securitySchemes: {
-          bearerAuth: {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-          }
-        }
-      },
-    },
-    apis: ['./routes/*.js'],
-  };
-  
-
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
-console.log(swaggerSpec)
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-/*--fin documnentation-*/
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(body_parser.json());
 
@@ -64,7 +36,7 @@ app.use((err, req, res, next) => {
     }
 });
 
-const server = app.listen(4200, "0.0.0.0", () => {
+const server = app.listen(4100, "localhost", () => {
     const host = server.address().address;
     const port = server.address().port;
     console.log("App listening at http://%s:%s", host, port);

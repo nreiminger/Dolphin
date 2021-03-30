@@ -4,28 +4,6 @@ const bcrypt = require("bcrypt");
 var jwt = require('jsonwebtoken');
 const auth = require('../middleware/authVerify')
 module.exports=[
-	/**
-	* @openapi	
-	* /user/signup:
-	*   post:
-	*     summary: Create a new user
-	*     parameters: 
-	*     - name: username
-	*       description: username of the user
-	*       in: body
-	*       required: true
-	*       type: string
-	*     - name: password
-	*       description: password of the user
-	*       required: true
-	*       type: string
-	*       in: body
-	*     responses:
-	*       201:
-	*         description: Created
-	*       500:
-	*         description: User exist Already
-	*/
 	{
 		url : '/user/signup',
 		method : 'post',
@@ -53,33 +31,6 @@ module.exports=[
 			.catch(err => { console.log( err);res.json({error : err})})
 		}
 	},
-	/**
-	* @swagger
-	* /user/signin:
-	*   post:
-	*     summary: Connect with a user
-	*     consumes:
-	*       - application/json
-	*     parameters:
-	*       - in: body
-	*         name: user
-	*         description: User to connect
-	*         schema:
-	*           type: object
-	*	          required:
-	*             -username
-	*             -password
-	*           properties:
-	*             username:
-	*               type: string
-	*               example: "Dolphin"
-	*             password:
-	*               type: string
-	*               example: "Dolphin"
-	*     responses:
-	*       200:
-	*         description: Get the jwt token from the user
-	*/
 	{
 		url : '/user/signin',
 		method:'post',
@@ -102,17 +53,6 @@ module.exports=[
 			.catch(err => res.status(500).json({error : "Authentification failed"}))
 		}
 	},
-	/**
-	* @swagger
-	* /user/whoami:
-	*   post:
-	*     security:
-	*      - bearerAuth: []
-	*     summary: Verify how is connect
-	*     responses:
-	*      200:
-	*        description: get the id and the name from the connected user
-	*/
     {
         url: '/user/whoami',
         method : 'post',
